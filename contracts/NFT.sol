@@ -12,6 +12,9 @@ contract NFT is ERC721, PullPayment, Ownable {
     // Constants. Define total supply.
     uint256 public constant TOTAL_SUPPLY =10_000;
 
+    // The list of first address to mint
+    address[] public firstmintlist; 
+
     // Constants. Define MINT price.
     uint256 public constant MINT_PRICE = 0.008 ether;
 
@@ -33,12 +36,18 @@ contract NFT is ERC721, PullPayment, Ownable {
         currentTokenId.increment();
         uint256 newItemId = currentTokenId.current();
         _safeMint(recipient, newItemId);
+        firstmintlist.push(recipient);
         return newItemId;
     }
 
     // @dev Returns an URI for a given token ID
     function _baseURI() internal view virtual override returns (string memory) {
         return baseTokenURI;
+    }
+
+    // @dev Return mint address list
+    function getmintaddress() public view returns (address[] memory) {
+        return firstmintlist;
     }
 
     // @dev Sets the base token URI prefix
