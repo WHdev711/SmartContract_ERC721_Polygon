@@ -2,3 +2,8 @@ node_modules
 .env
 cache/solidity-files-cache.json
 artifacts
+images
+image
+metadata
+*.car
+
