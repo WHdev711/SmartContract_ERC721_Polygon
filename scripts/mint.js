@@ -4,10 +4,11 @@ const  fetch  = require("node-fetch");
 
 task("mint", "Mints from the NFT contract")
 .addParam("address", "The address to receive a token")
+.addParam("tokenid", "The address to receive a token")
 .setAction(async function (taskArguments, hre) {
     console.log(taskArguments);
     const contract =  await getContract("NFT", hre);
-    const transactionResponse = await contract.mintTo(taskArguments.address, {
+    const transactionResponse = await contract.mintTo(taskArguments.address, taskArguments.tokenid, {
         gasLimit:500_000,
         value:8000000000000000
     });
@@ -40,12 +41,22 @@ task("token-uri","Fetches the token metadata for the given token ID")
 })
 
 task("withdraw", "Withdraw from the NFT contract")
-.addParam("address", "The address to withdraw")
 .setAction(async function (taskArguments, hre) {
     console.log(taskArguments);
     const contract =  await getContract("NFT", hre);
-    const transactionResponse = await contract.withdrawPayments(taskArguments.address, {
+    const transactionResponse = await contract.withdraw({
         gasLimit:500_000,
     });
     console.log(`Transacton Hash: ${transactionResponse.hash}`);
+});
+
+
+task("getlist", "Withdraw from the NFT contract")
+.setAction(async function (taskArguments, hre) {
+    console.log(taskArguments);
+    const contract =  await getContract("NFT", hre);
+    const transactionResponse = await contract.getmintaddress({
+        gasLimit:500_000,
+    });
+    console.log(`Transacton Hash: ${transactionResponse}`);
 });
